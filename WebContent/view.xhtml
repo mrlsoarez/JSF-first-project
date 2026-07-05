@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+	<h:head>
+		<title>Biblioteca Livro</title>
+		<style>
+			body {
+			    font-family: Arial, sans-serif;
+			    max-width: 500px;
+			    margin: 40px auto;
+			    padding: 0 20px;
+			}
+			
+			h1 {
+			    font-size: 25px;
+			}
+			
+			.form {
+				border: 1px solid black;
+			}
+			
+			.form.button {
+				color: #FF7F50;
+				padding: 5px;
+			}
+			
+			.field {
+			    margin-bottom: 10px;
+			}
+			
+			.field label {
+			    display: inline-block;
+			    width: 70px;
+			}
+			
+			.livro-item {
+			    border: 1px solid #ccc;
+			    border-radius: 6px;
+			    padding: 12px;
+			    margin-bottom: 10px;
+			}
+			
+			.livro-item p {
+			    margin: 4px 0;
+			}
+			
+			.error {
+				color: red
+			}
+		</style>
+	</h:head>
+
+	<h:body>
+		<h1>Livros</h1>
+		<h:messages styleClass = "error"/>
+		<h:form>
+			<div class="field">
+				<label>Título</label>
+				<h:inputText id = "titulo" value="#{livroController.livro.title}"  validator = "#{validatorLivro.validateData}" required = "true"/>
+			</div>
+			<div class="field">
+				<label>Autor</label>
+				<h:inputText id = "autor"  value="#{livroController.livro.author}" validator = "#{validatorLivro.validateData}" required = "true"/>
+			</div>
+			<div class="field">
+				<label>ISBN</label>
+				 <h:inputText id = "isbn" value="#{livroController.livro.isbn}" validator = "#{validatorLivro.validateData}" required = "true"/>
+			</div>
+			<div class="field">
+				<label>Ano</label>
+				<h:inputText id = "ano" value="#{livroController.livro.ano}" a:type="date" validator = "#{validatorLivro.validateData}" required = "true"/>
+			</div>
+			<h:commandButton value="Adicionar" action="#{livroController.addData}"/>
+		</h:form>
+		<hr/>
+		<ui:repeat var="tempLivro" value="#{livroController.livros}">
+			<div class="livro-item">
+				<p><b>#{tempLivro.title}</b></p>
+				<p>Autor: #{tempLivro.author}</p>
+				<p>Ano: #{tempLivro.ano}</p>
+				<p>ISBN: #{tempLivro.isbn}</p>
+				<h:form>
+					<h:commandButton value="Remover livro?" action="#{livroController.removeLivro(tempLivro)}"/>
+				</h:form>
+			</div>
+		</ui:repeat>
+	</h:body>
+
+</html>
